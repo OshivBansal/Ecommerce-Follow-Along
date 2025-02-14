@@ -1,22 +1,27 @@
-## Milestone 3 Progress 🚀
+## Milestone 4: Creating User Model and Controller 🚀
 
-### ✅ Backend Folder Structure
-- Organized backend code with separate folders for routes, controllers, models, and middleware.
-- Introduced `utils` and `middlewares` directories for better modularity.
+In **Milestone 4**, we expanded our backend by introducing **User Models**, **Controllers**, and **File Uploads**.
 
-### ✅ Server Setup
-- Created a backend server using Node.js and Express.
-- Configured the server to listen on a designated port.
+### ✅ **User Model Implementation**
+- Defined a **User Schema** using Mongoose to store user details (name, email, password, etc.).
+- Implemented necessary **validations** to ensure data integrity.
+- Integrated **bcrypt** for secure password hashing.
 
-### ✅ Database Connection
-- Integrated MongoDB to store and manage data.
-- Verified successful connection between the server and MongoDB.
+### ✅ **User Controller Setup**
+- Developed controller functions to:
+  - **Create new users**
+  - **Retrieve user details**
+  - **Update user information**
+  - **Delete users** if necessary
+- Handled error responses for **invalid or duplicate user entries**.
 
-### ✅ Error Handling
-- Implemented a global error handler for better debugging.
-- Provided meaningful error messages for invalid requests and failed operations.
+### ✅ **Multer File Upload Integration**
+- Configured **Multer** to handle file uploads (e.g., profile pictures).
+- Implemented logic to **store and retrieve uploaded images**.
+- Ensured file validation to prevent invalid file types from being uploaded.
 
-### ✅ README Update
-- Documented Milestone 3 progress in this README file.
+### ✅ **Project Submission**
+- Pushed the updated code to GitHub.
+- Updated the README with Milestone 4 details.
 
-This milestone focused on setting up a solid backend infrastructure to support the application’s growth and data management.
+This milestone strengthened the **user management** aspect of our application, making it more robust and scalable for future enhancements.
