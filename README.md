@@ -15,6 +15,7 @@ Search and filter functionality for an optimized user experience.
 5. User Authentication
 Secure authentication with JWT.
 Role-based access control for users and admins.
+
 Milestone 2 Progress 🚀
 ✅ Project Setup
 Structured the project with separate frontend and backend directories.
@@ -26,6 +27,7 @@ Added useful extensions to improve development efficiency.
 Designed and developed a fully functional Login Page.
 Ensured proper UI styling using Tailwind CSS.
 Set up basic authentication logic to handle user login.
+
 Milestone 3 Progress 🚀
 ✅ Backend Folder Structure
 Organized backend code with separate folders for routes, controllers, models, and middleware.
@@ -35,6 +37,7 @@ Created a backend server using Node.js and Express.
 Integrated MongoDB to store and manage data.
 ✅ Error Handling
 Implemented a global error handler for better debugging.
+
 Milestone 4: Creating User Model and Controller 🚀
 ✅ User Model Implementation
 Defined a User Schema using Mongoose.
@@ -43,10 +46,12 @@ Integrated bcrypt for secure password hashing.
 Developed controller functions for user management.
 ✅ Multer File Upload Integration
 Configured Multer to handle file uploads (e.g., profile pictures).
+
 Milestone 5: Creating the Signup Page 🚀
 ✅ Sign-Up Page UI Development
 Designed the Sign-Up page using Tailwind CSS.
 Implemented client-side form validation.
+
 Milestone 6: Backend Signup Endpoint and Password Encryption 🚀
 ✅ Signup Endpoint Implementation
 Created a new route to handle user registration.
