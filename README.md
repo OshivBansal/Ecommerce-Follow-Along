@@ -242,3 +242,10 @@ Integrated these endpoints with the frontend.
 - ✅ **Testing and Validation**
 Ensured smooth UI interaction for increasing and decreasing quantities.
 Tested API responses to validate quantity updates.
+
+### **Milestone 20: Profile Page & User Data Endpoint 🚀**
+- **✅ Backend Endpoint for User Data**
+  - Created a GET endpoint to fetch user details based on their email.
+  - Implemented secure user authentication to ensure only authorized users can access their data.
+  - Integrated error handling to manage invalid or missing user records.
+
