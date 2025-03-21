@@ -270,3 +270,15 @@ Tested API responses to validate quantity updates.
 - ✅ Error Handling & Security Implemented proper authentication to ensure only logged-in users can add addresses. Added error handling to manage invalid data or database issues.
 
 - ✅ Testing & Debugging Verified that addresses are successfully stored in the database. Ensured seamless data flow from the frontend to the backend.
+
+### **Milestone 23: Place Order Functionality🚀**
+
+- ✅ "Place Order" Button Added a functional "Place Order" button inside the cart page, allowing users to proceed with their purchases seamlessly.
+
+- ✅ Address Selection Implemented a select address page displaying all available addresses stored in the user profile. Users can choose their preferred shipping address before placing an order.
+
+- ✅ Order Confirmation & API Integration Connected the order placement functionality with the backend API. Once an order is placed, it is stored in the database with relevant user details.
+
+- ✅ Error Handling & Security Ensured only authenticated users can place orders. Implemented error handling for invalid or missing address selections and order submission failures.
+
+- ✅ Testing & Debugging Verified that orders are stored correctly in the database. Ensured smooth data flow between the frontend and backend.
