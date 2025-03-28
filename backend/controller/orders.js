@@ -37,8 +37,17 @@ router.post('/place-order', async (req, res) => {
 
         const orders = await Promise.all(orderPromises);
 
+
         user.cart = [];
         await user.save();
+
+        // Clear user's cart after placing orders (assuming a Cart model exists)
+
+        // await Cart.deleteMany({ user: user._id });
+
+        await Cart.deleteMany({ user: user._id });
+
+
 
         res.status(201).json({ message: 'Orders placed and cart cleared successfully.', orders });
     } catch (error) {
@@ -46,8 +55,6 @@ router.post('/place-order', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-
-
 
 
 router.get('/my-orders', async (req, res) => {
@@ -74,6 +81,7 @@ router.get('/my-orders', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
 
 
 router.get('/myorders', async (req, res) => {
@@ -124,3 +132,9 @@ router.patch('/cancel-order/:orderId', async (req, res) => {
 
 
 module.exports = router;
+
+module.exports = router;
+
+module.exports = router;
+
+

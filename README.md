@@ -310,6 +310,7 @@ Tested API responses to validate quantity updates.
 •⁠  ⁠Stored each product as a separate order with the same address.
 •⁠  ⁠Used the existing Order schema to save order details in MongoDB.
 
+
 ### **Milestone 26: Fetch User Orders API 📦**
 
 ✅ Order Retrieval Endpoint
@@ -319,6 +320,7 @@ Tested API responses to validate quantity updates.
 ✅ Fetch & Response
 •⁠  ⁠Used the ⁠ _id ⁠ to fetch all orders of the user from the database.
 •⁠  ⁠Sent all user orders in the API response.
+
 
 ### **Milestone 27: My Orders Page 🛍️**
 
@@ -332,3 +334,4 @@ Tested API responses to validate quantity updates.
 ✅ UI & Navigation
 •⁠  ⁠Displayed all user orders on the page.
 •⁠  ⁠Added "My Orders" to the navbar for easy access.
+
