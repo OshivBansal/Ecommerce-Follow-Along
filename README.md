@@ -335,3 +335,25 @@ Tested API responses to validate quantity updates.
 •⁠  ⁠Displayed all user orders on the page.
 •⁠  ⁠Added "My Orders" to the navbar for easy access.
 
+### **Milestone 28: Order Cancellation Feature** 
+
+✅ My Orders Page
+•⁠  ⁠Added a Cancel Order button for active orders.
+•⁠  ⁠Hidden the button for canceled orders.
+  
+✅ API Implementation
+•⁠  ⁠Created an endpoint to cancel orders.
+•⁠  ⁠Updated order status to canceled in the database.
+
+✅ UI Integration
+•⁠  ⁠Sent API request on button click.
+•⁠  ⁠Updated UI after successful cancellation.
+
+### **Milestone 29: PayPal Integration for Online Payments 💳**
+
+✅ PayPal Developer Setup
+•⁠  ⁠Created a PayPal Developer account.
+•⁠  ⁠Accessed the PayPal Developer Dashboard.
+•⁠  ⁠Created a Sandbox account for testing transactions.
+•⁠  ⁠Copied and saved the Sandbox UserID for future reference.
+•⁠  ⁠Retrieved and stored the Client ID from the Sandbox account.
