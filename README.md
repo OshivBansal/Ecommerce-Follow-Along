@@ -335,7 +335,11 @@ Tested API responses to validate quantity updates.
 •⁠  ⁠Displayed all user orders on the page.
 •⁠  ⁠Added "My Orders" to the navbar for easy access.
 
+
 ### **Milestone 28: Order Cancellation Feature**
+
+### **Milestone 28: Order Cancellation Feature** 
+
 
 ✅ My Orders Page
 •⁠  ⁠Added a Cancel Order button for active orders.
@@ -357,6 +361,7 @@ Tested API responses to validate quantity updates.
 •⁠  ⁠Created a Sandbox account for testing transactions.
 •⁠  ⁠Copied and saved the Sandbox UserID for future reference.
 •⁠  ⁠Retrieved and stored the Client ID from the Sandbox account.
+
 
 ✅ Payment Options on Order Confirmation Page
 •⁠  ⁠Added two payment options: Cash on Delivery (COD) and Online Payment.
@@ -380,3 +385,4 @@ Tested API responses to validate quantity updates.
 5. Error Handling & Security
 * Implemented proper authentication to ensure only authorized users can make payments.
 * Added error handling mechanisms for failed transactions.
+
