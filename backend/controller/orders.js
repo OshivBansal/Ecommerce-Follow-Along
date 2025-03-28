@@ -37,8 +37,17 @@ router.post('/place-order', async (req, res) => {
 
         const orders = await Promise.all(orderPromises);
 
+
         user.cart = [];
         await user.save();
+
+        // Clear user's cart after placing orders (assuming a Cart model exists)
+
+        // await Cart.deleteMany({ user: user._id });
+
+        await Cart.deleteMany({ user: user._id });
+
+
 
         res.status(201).json({ message: 'Orders placed and cart cleared successfully.', orders });
     } catch (error) {
@@ -46,8 +55,6 @@ router.post('/place-order', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-
-
 
 
 router.get('/my-orders', async (req, res) => {
@@ -76,6 +83,7 @@ router.get('/my-orders', async (req, res) => {
 });
 
 
+
 router.get('/myorders', async (req, res) => {
     try {
         // Retrieve email from query parameters
@@ -99,4 +107,34 @@ router.get('/myorders', async (req, res) => {
     }
 });
 
+router.patch('/cancel-order/:orderId', async (req, res) => {
+    try {
+        const { orderId } = req.params;
+        console.log("fff")
+        // Find the order by ID
+        const order = await Order.findById(orderId);
+        console.log(order);
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found.' });
+        }
+
+        // Update order status to 'cancelled'
+        order.orderStatus = 'Cancelled';
+        await order.save();
+
+        res.status(200).json({ message: 'Order cancelled successfully.', order });
+    } catch (error) {
+        console.error('Error cancelling order:', error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+
 module.exports = router;
+
+module.exports = router;
+
+module.exports = router;
+
+
