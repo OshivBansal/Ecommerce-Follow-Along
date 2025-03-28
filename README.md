@@ -282,3 +282,17 @@ Tested API responses to validate quantity updates.
 - ✅ Error Handling & Security Ensured only authenticated users can place orders. Implemented error handling for invalid or missing address selections and order submission failures.
 
 - ✅ Testing & Debugging Verified that orders are stored correctly in the database. Ensured smooth data flow between the frontend and backend.
+
+### **Milestone 24: Order Summary Page 🛍️**
+
+✅ Display Ordered Products
+•⁠  ⁠Listed all products the user is ordering.
+
+✅ Address Confirmation
+•⁠  ⁠Displayed the selected delivery address.
+
+✅ Cart Value Calculation
+•⁠  ⁠Showed the total value of the cart.
+
+✅ Place Order Button
+•⁠  ⁠Added a "Place Order" button at the bottom for final confirmation.
