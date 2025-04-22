@@ -386,7 +386,7 @@ Tested API responses to validate quantity updates.
 * Implemented proper authentication to ensure only authorized users can make payments.
 * Added error handling mechanisms for failed transactions.
 
-Milestone 31: JWT Auth & Member CRUD 🔐
+### **Milestone 31: JWT Auth & Member CRUD 🔐**
 
 ✅ JWT Authentication
 
