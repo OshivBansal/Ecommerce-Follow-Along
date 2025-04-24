@@ -2,41 +2,32 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddressCard from "../components/AddressCard";
 import Nav from "../components/nav";
+import { useSelector } from "react-redux";
+import axios from "../axiosConfig";
 
 export default function Profile() {
+	const email = useSelector((state) => state.user.email);
 	const [personalDetails, setPersonalDetails] = useState({
 		name: "",
 		email: "",
 		phoneNumber: "",
 		avatarUrl: "",
 	});
-
 	const [addresses, setAddresses] = useState([]);
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		fetch(
-			`http://localhost:8000/api/v2/user/profile?email=${"ashupatil1357@gmail.com"}`,
-			{
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			}
-		)
+		if (!email) return;
+		axios
+			.get("/api/v2/user/profile", { params: { email } })
 			.then((res) => {
-				if (!res.ok) {
-					throw new Error(`HTTP error! status: ${res.status}`);
-				}
-				return res.json();
+				setPersonalDetails(res.data.user);
+				setAddresses(res.data.addresses);
+				console.log("User fetched:", res.data.user);
+				console.log("Addresses fetched:", res.data.addresses);
 			})
-			.then((data) => {
-				setPersonalDetails(data.user);
-				setAddresses(data.addresses);
-				console.log("User fetched:", data.user);
-				console.log("Addresses fetched:", data.addresses);
-			});
-	}, []);
+			.catch((err) => console.error(err));
+	}, [email]);
 
 	const handleAddAddress = () => {
 		navigate("/create-address");
@@ -49,9 +40,7 @@ export default function Profile() {
 				<div className="w-full h-full bg-neutral-700 rounded-lg">
 					<div className="w-full h-max my-2 p-5">
 						<div className="w-full h-max">
-							<h1 className="text-3xl text-neutral-100">
-								Personal Details
-							</h1>
+							<h1 className="text-3xl text-neutral-100">Personal Details</h1>
 						</div>
 						<div className="w-full h-max flex flex-col sm:flex-row p-5 gap-10">
 							<div className="w-40 h-max flex flex-col justify-center items-center gap-y-3">
@@ -59,29 +48,30 @@ export default function Profile() {
 									PICTURE
 								</div>
 								<img
-									src={`http://localhost:8000/${personalDetails.avatarUrl}` || `https://cdn.vectorstock.com/i/500p/17/61/male-avatar-profile-picture-vector-10211761.jpg`}
+									src={
+										personalDetails.avatarUrl
+											? `http://localhost:8000/${personalDetails.avatarUrl}`
+											: `https://cdn.vectorstock.com/i/500x500/17/61/male-avatar-profile-picture-vector-10211761.jpg`
+									}
 									alt="profile"
 									className="w-40 h-40 rounded-full"
 									onError={(e) => {
-										e.target.onerror = null; // Prevents infinite loop if the default image also fails
-										e.target.src = `https://cdn.vectorstock.com/i/500p/17/61/male-avatar-profile-picture-vector-10211761.jpg`;
+										e.target.onerror = null;
+										e.target.src =
+											"https://cdn.vectorstock.com/i/500x500/17/61/male-avatar-profile-picture-vector-10211761.jpg";
 									}}
 								/>
 							</div>
 							<div className="h-max md:flex-grow">
 								<div className="w-full h-max flex flex-col justify-center items-center gap-y-3">
 									<div className="w-full h-max">
-										<div className="text-2xl text-neutral-100 text-left">
-											NAME
-										</div>
+										<div className="text-2xl text-neutral-100 text-left">NAME</div>
 										<div className="text-lg font-light text-neutral-100 text-left break-all">
 											{personalDetails.name}
 										</div>
 									</div>
 									<div className="w-full h-max">
-										<div className="text-2xl text-neutral-100 text-left">
-											EMAIL
-										</div>
+										<div className="text-2xl text-neutral-100 text-left">EMAIL</div>
 										<div className="text-lg font-light text-neutral-100 text-left break-all">
 											{personalDetails.email}
 										</div>
@@ -100,9 +90,7 @@ export default function Profile() {
 					</div>
 					<div className="w-full h-max my-2 p-5">
 						<div className="w-full h-max">
-							<h1 className="text-3xl text-neutral-100">
-								Addresses
-							</h1>
+							<h1 className="text-3xl text-neutral-100">Addresses</h1>
 						</div>
 						<div className="w-full h-max p-5">
 							<button

@@ -1,60 +1,37 @@
-// SelectAddress.jsx
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Nav from '../components/nav'; // Ensure correct casing
+import axios from '../axiosConfig';
+import Nav from '../components/nav';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const SelectAddress = () => {
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-
-    // Replace with dynamic email in production
-    const userEmail = 'ashupatil1357@gmail.com';
+    const userEmail = useSelector((state) => state.user.email);
 
     useEffect(() => {
-        const fetchAddresses = async () => {
-            try {
-                const response = await axios.get('http://localhost:8000/api/v2/user/addresses', {
-                    params: { email: userEmail },
-                });
-
-                if (response.status !== 200) {
-                    if (response.status === 404) {
-                        throw new Error('User not found.');
-                    } else if (response.status === 400) {
-                        throw new Error('Bad request. Email parameter is missing.');
-                    } else {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                }
-
-                const data = response.data;
-
-                if (data && Array.isArray(data.addresses)) {
-                    setAddresses(data.addresses);
+        if (!userEmail) return;
+        axios.get('/api/v2/user/addresses', { params: { email: userEmail } })
+            .then((res) => {
+                if (res.data && Array.isArray(res.data.addresses)) {
+                    setAddresses(res.data.addresses);
                 } else {
                     setAddresses([]);
-                    console.warn('Unexpected response structure:', data);
                 }
-            } catch (err) {
+            })
+            .catch((err) => {
                 console.error('Error fetching addresses:', err);
                 setError(err.response?.data?.message || err.message || 'An unexpected error occurred.');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchAddresses();
+            })
+            .finally(() => setLoading(false));
     }, [userEmail]);
 
     const handleSelectAddress = (addressId) => {
-        // Navigate to Order Confirmation with the selected address ID and email
         navigate('/order-confirmation', { state: { addressId, email: userEmail } });
     };
 
-    // Render loading state
     if (loading) {
         return (
             <div className='w-full h-screen flex justify-center items-center'>
@@ -63,7 +40,6 @@ const SelectAddress = () => {
         );
     }
 
-    // Render error state
     if (error) {
         return (
             <div className='w-full h-screen flex flex-col justify-center items-center'>
@@ -93,7 +69,8 @@ const SelectAddress = () => {
                                 >
                                     <div>
                                         <p className='font-medium'>
-                                            {address.address1}{address.address2 ? `, ${address.address2}` : ''}, {address.city}, {address.state}, {address.zipCode}
+                                            {address.address1}
+                                            {address.address2 ? `, ${address.address2}` : ''}, {address.city}, {address.state}, {address.zipCode}
                                         </p>
                                         <p className='text-sm text-gray-600'>{address.country}</p>
                                         <p className='text-sm text-gray-500'>Type: {address.addressType || 'N/A'}</p>
