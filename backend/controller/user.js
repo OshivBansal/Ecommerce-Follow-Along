@@ -9,10 +9,14 @@ const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
+const jwt = require("jsonwebtoken"); // Import JSON Web Token
 require("dotenv").config();
 const { isAuthenticatedUser } = require('../middleware/auth');
 
 const JWT_SECRET = "randomtoken1234567890";
+JWT_SECRET = "your_strong_secret_key"
+
 
 // 1) Create user
 router.post("/create-user", upload.single("file"), catchAsyncErrors(async (req, res, next) => {
@@ -54,6 +58,8 @@ router.post("/create-user", upload.single("file"), catchAsyncErrors(async (req, 
 }));
 
 // 2) Login
+
+// In your login route (e.g., routes/user.js)
 router.post("/login", catchAsyncErrors(async (req, res, next) => {
     console.log("Logging in user...");
     const { email, password } = req.body;
@@ -74,6 +80,7 @@ router.post("/login", catchAsyncErrors(async (req, res, next) => {
     const token = jwt.sign(
         { id: user._id, email: user.email },
         JWT_SECRET,
+        process.env.JWT_SECRET || "your_jwt_secret",
         { expiresIn: "1h" }
     );
 
@@ -81,6 +88,8 @@ router.post("/login", catchAsyncErrors(async (req, res, next) => {
     res.cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // true in production
+
+        secure: process.env.NODE_ENV === "production", // use true in production
         sameSite: "Strict",
         maxAge: 3600000, // 1 hour
     });
@@ -94,6 +103,10 @@ router.post("/login", catchAsyncErrors(async (req, res, next) => {
 
 // 3) Get profile
 router.get("/profile", isAuthenticatedUser, catchAsyncErrors(async (req, res, next) => {
+
+
+router.get("/profile", catchAsyncErrors(async (req, res, next) => {
+
     const { email } = req.query;
     if (!email) {
         return next(new ErrorHandler("Please provide an email", 400));
@@ -137,8 +150,12 @@ router.post("/add-address", isAuthenticatedUser, catchAsyncErrors(async (req, re
     });
 }));
 
+
 // 5) Get addresses
 router.get("/addresses", isAuthenticatedUser, catchAsyncErrors(async (req, res, next) => {
+
+router.get("/addresses", catchAsyncErrors(async (req, res, next) => {
+
     const { email } = req.query;
     if (!email) {
         return next(new ErrorHandler("Please provide an email", 400));

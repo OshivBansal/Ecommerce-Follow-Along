@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from '../axiosConfig';
 import Nav from '../components/nav';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import Nav from '../components/nav';
+import { useSelector } from 'react-redux'; // Import useSelector
 
 const MyOrdersPage = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const email = useSelector((state) => state.user.email);
+
+    // Retrieve email from Redux state
     const email = useSelector((state) => state.user.email);
 
     const fetchOrders = async () => {
@@ -15,6 +21,12 @@ const MyOrdersPage = () => {
             setLoading(true);
             setError('');
             const response = await axios.get('/api/v2/orders/myorders', {
+
+        if (!email) return; // Only fetch if email is available
+        try {
+            setLoading(true);
+            setError('');
+            const response = await axios.get('http://localhost:8000/api/v2/orders/myorders', {
                 params: { email },
             });
             setOrders(response.data.orders);
@@ -42,6 +54,8 @@ const MyOrdersPage = () => {
         // eslint-disable-next-line
     }, [email]);
 
+    }, [email]); // Dependency array includes email
+
     return (
         <>
             <Nav />
@@ -50,6 +64,12 @@ const MyOrdersPage = () => {
                     <h1 className="text-4xl font-extrabold text-center mb-10">My Orders</h1>
                     {loading && <p className="text-center text-blue-500 text-lg">Loading orders...</p>}
                     {error && <p className="text-center text-red-500 text-lg">{error}</p>}
+                    {loading && (
+                        <p className="text-center text-blue-500 text-lg">Loading orders...</p>
+                    )}
+                    {error && (
+                        <p className="text-center text-red-500 text-lg">{error}</p>
+                    )}
                     {orders.length > 0 ? (
                         <div className="grid gap-8">
                             {orders.map((order) => (

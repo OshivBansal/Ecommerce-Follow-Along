@@ -4,8 +4,13 @@ import { useNavigate } from "react-router-dom";
 import Nav from "../components/nav";
 import { useSelector } from "react-redux";
 
+import { useSelector } from "react-redux"; // Import useSelector
+
 const CreateAddress = () => {
     const navigate = useNavigate();
+    const email = useSelector((state) => state.user.email);
+
+    // Get email from Redux state
     const email = useSelector((state) => state.user.email);
 
     const [country, setCountry] = useState("");
@@ -27,6 +32,9 @@ const CreateAddress = () => {
             zipCode,
             addressType,
             email,
+
+            email // Use the email from Redux
+
         };
 
         try {

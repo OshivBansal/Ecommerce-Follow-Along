@@ -4,6 +4,7 @@ import Nav from '../components/nav';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from '../axiosConfig'; // <--- use your configured axios
+import { useSelector } from 'react-redux'; // Import useSelector
 
 const Cart = () => {
   const [products, setProducts] = useState([]);
@@ -21,6 +22,30 @@ const Cart = () => {
             ...product.productId,
           }))
         );
+
+
+  // Get the email from Redux state
+  const email = useSelector((state) => state.user.email);
+
+  useEffect(() => {
+    // Only fetch if email is available
+    if (!email) return;
+
+    fetch(`http://localhost:8000/api/v2/product/cartproducts?email=${email}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setProducts(
+          data.cart.map(product => ({
+            quantity: product['quantity'],
+            ...product['productId']
+          }))
+        );
+        console.log("Products fetched:", data.cart);
       })
       .catch((err) => {
         console.error("Error fetching products:", err);
