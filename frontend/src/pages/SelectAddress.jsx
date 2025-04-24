@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import axios from '../axiosConfig';
+import Nav from '../components/nav';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import axios from 'axios';
 import Nav from '../components/nav';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +14,15 @@ const SelectAddress = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const userEmail = useSelector((state) => state.user.email);
+
+    useEffect(() => {
+        if (!userEmail) return;
+        axios.get('/api/v2/user/addresses', { params: { email: userEmail } })
+            .then((res) => {
+                if (res.data && Array.isArray(res.data.addresses)) {
+                    setAddresses(res.data.addresses);
+
 
     // Retrieve email from Redux state
     const userEmail = useSelector((state) => state.user.email);
@@ -38,21 +52,16 @@ const SelectAddress = () => {
                     setAddresses(data.addresses);
                 } else {
                     setAddresses([]);
-                    console.warn('Unexpected response structure:', data);
                 }
-            } catch (err) {
+            })
+            .catch((err) => {
                 console.error('Error fetching addresses:', err);
                 setError(err.response?.data?.message || err.message || 'An unexpected error occurred.');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchAddresses();
+            })
+            .finally(() => setLoading(false));
     }, [userEmail]);
 
     const handleSelectAddress = (addressId) => {
-        // Navigate to Order Confirmation with the selected address ID and email
         navigate('/order-confirmation', { state: { addressId, email: userEmail } });
     };
 

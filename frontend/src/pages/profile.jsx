@@ -2,10 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddressCard from "../components/AddressCard";
 import Nav from "../components/nav";
+
+import { useSelector } from "react-redux";
+import axios from "../axiosConfig";
+
+export default function Profile() {
+
 import { useSelector } from "react-redux"; // Import useSelector
 
 export default function Profile() {
 	// Retrieve email from Redux state
+
 	const email = useSelector((state) => state.user.email);
 	const [personalDetails, setPersonalDetails] = useState({
 		name: "",
@@ -17,6 +24,11 @@ export default function Profile() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
+
+		if (!email) return;
+		axios
+			.get("/api/v2/user/profile", { params: { email } })
+
 		// Only fetch profile if email exists
 		if (!email) return;
 		fetch(`http://localhost:8000/api/v2/user/profile?email=${email}`, {
@@ -25,12 +37,14 @@ export default function Profile() {
 				"Content-Type": "application/json",
 			},
 		})
+
 			.then((res) => {
-				if (!res.ok) {
-					throw new Error(`HTTP error! status: ${res.status}`);
-				}
-				return res.json();
+				setPersonalDetails(res.data.user);
+				setAddresses(res.data.addresses);
+				console.log("User fetched:", res.data.user);
+				console.log("Addresses fetched:", res.data.addresses);
 			})
+
 			.then((data) => {
 				setPersonalDetails(data.user);
 				setAddresses(data.addresses);
@@ -60,6 +74,9 @@ export default function Profile() {
 								</div>
 								<img
 									src={
+										personalDetails.avatarUrl
+											? `http://localhost:8000/${personalDetails.avatarUrl}`
+											: `https://cdn.vectorstock.com/i/500x500/17/61/male-avatar-profile-picture-vector-10211761.jpg`
 										`http://localhost:8000/${personalDetails.avatarUrl}` ||
 										`https://cdn.vectorstock.com/i/500p/17/61/male-avatar-profile-picture-vector-10211761.jpg`
 									}
@@ -67,6 +84,8 @@ export default function Profile() {
 									className="w-40 h-40 rounded-full"
 									onError={(e) => {
 										e.target.onerror = null;
+										e.target.src =
+											"https://cdn.vectorstock.com/i/500x500/17/61/male-avatar-profile-picture-vector-10211761.jpg";
 										e.target.src = `https://cdn.vectorstock.com/i/500p/17/61/male-avatar-profile-picture-vector-10211761.jpg`;
 									}}
 								/>
@@ -74,17 +93,13 @@ export default function Profile() {
 							<div className="h-max md:flex-grow">
 								<div className="w-full h-max flex flex-col justify-center items-center gap-y-3">
 									<div className="w-full h-max">
-										<div className="text-2xl text-neutral-100 text-left">
-											NAME
-										</div>
+										<div className="text-2xl text-neutral-100 text-left">NAME</div>
 										<div className="text-lg font-light text-neutral-100 text-left break-all">
 											{personalDetails.name}
 										</div>
 									</div>
 									<div className="w-full h-max">
-										<div className="text-2xl text-neutral-100 text-left">
-											EMAIL
-										</div>
+										<div className="text-2xl text-neutral-100 text-left">EMAIL</div>
 										<div className="text-lg font-light text-neutral-100 text-left break-all">
 											{personalDetails.email}
 										</div>

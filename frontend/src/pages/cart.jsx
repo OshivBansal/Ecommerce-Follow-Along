@@ -2,11 +2,27 @@ import React, { useState, useEffect } from 'react';
 import CartProduct from '../components/CartProduct';
 import Nav from '../components/nav';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import axios from '../axiosConfig'; // <--- use your configured axios
 import { useSelector } from 'react-redux'; // Import useSelector
 
 const Cart = () => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+  const email = useSelector((state) => state.user.email);
+
+  useEffect(() => {
+    if (!email) return;
+    // Use axios with credentials
+    axios.get(`/api/v2/product/cartproducts?email=${email}`)
+      .then((res) => {
+        setProducts(
+          res.data.cart.map(product => ({
+            quantity: product.quantity,
+            ...product.productId,
+          }))
+        );
+
 
   // Get the email from Redux state
   const email = useSelector((state) => state.user.email);
@@ -37,7 +53,7 @@ const Cart = () => {
   }, [email]);
 
   const handlePlaceOrder = () => {
-    navigate('/select-address'); // Navigate to the Select Address page
+    navigate('/select-address');
   };
 
   return (
@@ -53,7 +69,6 @@ const Cart = () => {
               <CartProduct key={product._id} {...product} />
             ))}
           </div>
-          {/* Place Order Button */}
           <div className='w-full p-4 flex justify-end'>
             <button
               onClick={handlePlaceOrder}

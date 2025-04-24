@@ -4,6 +4,14 @@ import styles from "../../styles/styles";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setemail } from "../../store/userActions";
+import { useNavigate } from "react-router-dom";
+
+// Ensure axios sends cookies with requests
+axios.defaults.withCredentials = true;
+
+const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 import { useNavigate } from "react-router-dom";
 
