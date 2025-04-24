@@ -429,3 +429,4 @@ Configured cookie options for security and expiry.
 
 Tokens now persist in cookies for improved authentication.
 Enables secure session handling without relying on localStorage.
+
